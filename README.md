@@ -3,7 +3,7 @@ Very Tiny HTTPD for Nintendo 3DS consoles (fork of [3ds-httpd by dimaguy](https:
 
 This homebrew is meant to run as a *dedicated* HTTP daemon via autoboot. As such, if you're launching it via the Homebrew Launcher, the only way to return to the HOME menu is to reboot your console.
 
-vthttpd will shut down both screens when run to minimize power usage. Logs are stored in sdmc:/vthttpd
+vthttpd will shut down both screens when launched to minimize power usage. Logs are stored in sdmc:/vthttpd
 
 The "noservices" version will attempt to kill some services provided by the 3DS' firmware to free extra resources. **This has only been tested on old 3DS consoles and will very likely result in a crash on a n3DS/n2DS.**
 

@@ -1,0 +1,93 @@
+<!doctype html>
+
+<!--
+- SNOOPING AS USUAL I SEE! -
+
+This placeholder page is based on https://gist.github.com/oliveratgithub/e60d92706218812b6630045f59191f3d
+The 2DS is running a heavily modified 3ds-httpd fork as its server (not yet released to the public) and Luma3DS with some minor custom-tailored patches as its CFW, both forked and modified by me (vappster)
+
+The website will be done when it's done™, I hope to see you then :)
+!-->
+
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>Hello World!</title>
+	<meta name="description" content="This website is hosted on a Nintendo 3DS!">
+	<meta name="image" content="http://vappster.duckdns.org/image.png">
+	<meta name="author" content="vappster / temporary page based on https://gist.github.com/oliveratgithub">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="https://unpkg.com/purecss@1.0.0/build/pure-min.css" integrity="sha384-nn4HPE8lTHyVtfCBi5yW9d20FjT8BJwUXyWZT9InLYax14RDjBj46LmSztkmNP9w" crossorigin="anonymous">
+	<!--[if lt IE 9]>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.js"></script>
+	<![endif]-->
+	<!--[if lte IE 8]>
+		<link rel="stylesheet" href="https://unpkg.com/purecss@1.0.0/build/grids-responsive-old-ie-min.css">
+	<![endif]-->
+	<!--[if gt IE 8]><!-->
+		<link rel="stylesheet" href="https://unpkg.com/purecss@1.0.0/build/grids-responsive-min.css">
+	<!--<![endif]-->
+	<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css">
+	<script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-backstretch/2.0.4/jquery.backstretch.min.js"></script>
+	<style>
+		body {
+			line-height: 1.2em;
+			color: #eee;
+			background-color: #ddd;
+			font-family: "Helvetica Neue", helvetica, arial, sans-serif;
+			text-shadow: 2px 2px 8px rgba(000, 000, 000, 0.8);
+			font-size: 24px;
+			text-align: center;
+			margin-top: 85px;
+		}
+		h1, h2, h3, h4, h5, h6, label { color: #eee; }
+		h1 { text-transform: uppercase; }
+		#countdown { line-height: 1.1em; }
+	</style>
+</head>
+
+<body>
+	<div class="pure-g">
+		<div class="pure-u-1">
+			<h1>Hello World!</h1>
+			<h2>This website is hosted on a Nintendo 3DS!</h2>
+			Under construction! In the meantime, here is some data for you:</br></br>
+			Battery percentage: <span id="charge">0</span>%</br>
+			Battery voltage: <span id="voltage">0</span>V</br>
+			Charging: <span id="ischarging">0</span></br></br>
+			(Data refreshes every 15 seconds)</br></br>
+			= hosted and coded by vappster =
+		</div>
+	</div>
+</body>
+<script>
+$.backstretch("bg.jpg", {fade: 3000});
+
+async function getUrl(url) {
+	let request = await fetch(url);
+	let rettext = await request.text();
+    
+	return rettext;
+}
+
+async function updateText() {
+	let jsonstats = await getUrl("sysinfo/");
+	const sysinfo = JSON.parse(jsonstats);
+	
+	document.getElementById("charge").innerHTML=sysinfo.batterylevel;
+	document.getElementById("voltage").innerHTML=Math.round((5 * (sysinfo.batteryvoltage/256)) * 100) / 100; //ty 3dsident!
+	if (sysinfo.chargestate == 0) {
+		document.getElementById("ischarging").innerHTML="No";
+	} else {
+		document.getElementById("ischarging").innerHTML="Yes";
+	}
+}
+
+updateText();
+const interval = setInterval(function() {
+	updateText();
+	}, 15000);
+	
+</script>
+</html>

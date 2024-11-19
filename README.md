@@ -23,7 +23,7 @@ If something isn't working as expected or you want to check who's connecting to 
 #### Changelog
 ```
 == 19/11/2024 ==
-Initial public release
+- Initial public release
 
 == 26/06/2023 ==
 - The server will now return a fatal error in case it gets disconnected from Wi-Fi

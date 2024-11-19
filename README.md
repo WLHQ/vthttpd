@@ -16,7 +16,7 @@ This fork includes *many* changes compared to 3ds-httpd (a good bunch of which a
 1) Download one of the releases and extract it on the root of your SD card
 2) The "html" folder *on the root of the SD card* includes an example website: either leave it as-is for a quick test, or replace it with your own files
 3) Put your SD card back in your 3DS, power it on, make sure it's connected to a Wi-Fi network and launch vthttpd. *Do not worry if nothing is shown on screen, this is expected behavior: see above*
-4) The 3DS should now serve your website: connect to it using another device's browser
+4) The 3DS should now serve your website: you can connect to it using another device
 
 If something isn't working as expected or you want to check who's connecting to your website, logs can be found in sdmc:/vthttpd
 

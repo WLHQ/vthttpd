@@ -5,7 +5,7 @@ This homebrew is meant to run as a *dedicated* HTTP daemon via autoboot. As such
 
 vthttpd will shut down both screens when launched to minimize power usage. Logs are stored in sdmc:/vthttpd
 
-The "noservices" version will attempt to kill some services provided by the 3DS' firmware to potentially save power and free extra resources. **This has only been tested on old 3DS consoles and will very likely result in a crash on a n3DS/n2DS.**
+The "noservices" release will attempt to kill some services provided by the 3DS' firmware to potentially save power and free extra resources. **This has only been tested on old 3DS consoles and will very likely result in a crash on a n3DS/n2DS.**
 
 (If you are compiling vthttpd yourself and you don't want it to kill said services on launch, comment out terminateUnnecessaryServices() in src/server.c)
 

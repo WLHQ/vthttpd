@@ -1,5 +1,5 @@
 # vthttpd
-Very Tiny HTTPD for Nintendo 3DS consoles (fork of 3ds-httpd by dimaguy)
+Very Tiny HTTPD for Nintendo 3DS consoles (fork of [3ds-httpd by dimaguy](https://github.com/dimaguy/3ds-httpd))
 
 This homebrew is meant to run as a *dedicated* HTTP daemon via autoboot. As such, if you're launching it via the Homebrew Launcher, the only way to return to the HOME menu is to reboot your console.
 

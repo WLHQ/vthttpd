@@ -166,3 +166,53 @@ void init(int port) {
     // Initialize the HTML directory
     initialize_html_directory();
 }
+
+int loop(http_response *errorPage) {
+    u32 wifiStatus = 0;
+    ACU_GetStatus(&wifiStatus);
+    if (wifiStatus != 3)
+        failExit("disconnected from wifi\n");
+
+    data.client_id = accept(data.server_id, (struct sockaddr *)&data.client_addr, &data.client_length);
+    if (data.client_id < 0 && errno != EAGAIN) {
+        logPrint("accept: %d %s, reconnecting to wifi\n", errno, strerror(errno));
+        acWaitConnect();
+    } else {
+        // Set client socket to blocking to simplify sending data back
+        fcntl(data.client_id, F_SETFL, fcntl(data.client_id, F_GETFL, 0) & ~O_NONBLOCK);
+
+        // Reset old payload
+        memset(payload, 0, 4098);
+
+        // Read 1024 bytes (FIXME: dynamic size)
+        ret = recv(data.client_id, payload, 4096, 0);
+
+        // HTTP 1.1?
+        if (strstr(payload, "HTTP/1.1"))
+            manage_connection(&data, payload, errorPage);
+
+        // End connection
+        close(data.client_id);
+        data.client_id = -1;
+    }
+
+    // Turn off screens to save power
+    GSPLCD_PowerOffAllBacklights();
+
+    return data.running;
+}
+
+void destroy() {
+    NDMU_UnlockState();
+    NDMU_LeaveExclusiveState();
+    aptSetHomeAllowed(true);
+    aptSetSleepAllowed(true);
+    ndmuExit();
+    ptmuExit();
+    mcuHwcExit();
+    close(data.server_id);
+    socShutdown();
+    fclose(logFile);
+    gspLcdExit();
+    acExit();
+}
